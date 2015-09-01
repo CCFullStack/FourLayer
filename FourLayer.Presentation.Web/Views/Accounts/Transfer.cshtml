@@ -1,0 +1,42 @@
+﻿@using FourLayer.Presentation.Web.Models
+@using FourLayer.Services.Models
+@model TransferViewModel
+@{
+    ViewBag.Title = "Transfer";
+}
+
+<h2>Transfer</h2>
+
+@using (Html.BeginForm()) {
+
+    var myAccountListItems = new List<SelectListItem>();
+    var allAccountListItems = new List<SelectListItem>();
+
+    foreach (AccountDTO dto in Model.allAccounts) {
+        allAccountListItems.Add(new SelectListItem {
+            Value = dto.AccountNumber,
+            Text = dto.AccountNumber
+        });
+    }
+
+    foreach (AccountDTO dto in Model.myAccounts) {
+        myAccountListItems.Add(new SelectListItem {
+            Value = dto.AccountNumber,
+            Text = dto.AccountNumber
+        });
+    }
+
+    <div>
+        @Html.DropDownList("FromAccount", myAccountListItems, "From Account: ", new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.DropDownList("ToAccount", allAccountListItems, "To Account: ", new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.TextBox("Amount", "", new { @class = "form-control" })
+    </div>
+    <div>
+        <input type="submit" value="Transfer Funds" class="form-control" />
+    </div>
+}
+
